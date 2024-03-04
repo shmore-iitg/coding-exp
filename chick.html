@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <img id="hatch" src="egg1.png" alt="Egg" onclick="hatch()">
+    <script>
+        var images = ["egg1.png", "egg2.png", "egg3.png", "chicken.png"];
+        var index = 0;
+
+        function hatch() {
+            index++;
+            if (index < images.length) {
+                document.getElementById('hatch').src = images[index];
+            }
+        }
+    </script>
+</body>
+</html>
