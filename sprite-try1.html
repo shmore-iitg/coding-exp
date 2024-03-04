@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+<html>
+
+<body>
+
+    <div id="eggshell" class="sprite"></div>
+    <style>
+        .sprite {
+
+            width: 1000px; /* The width of one frame in the sprite sheet */
+            height: 600px; /* The height of the sprite sheet */
+            background: url('./spritesheet.png') 0 0; /* Needs the path to sprite sheet */
+        }
+
+    </style>
+
+    <script>
+
+        var frame = 0;
+        var totalFrames = 50; // Total number of frames in the sprite sheet
+        var spriteWidth = 100; // The width of one frame in the sprite sheet
+
+        var interval = setInterval(function() {
+            document.getElementById('eggshell').style.backgroundPosition = `-${frame * spriteWidth}px 0`;
+            frame++;
+            if (frame >= totalFrames) {
+                clearInterval(interval);
+            }
+        }, 500); // Change frame every 500 milliseconds
+    </script>
+</body>
+</html>
