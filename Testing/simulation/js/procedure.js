@@ -1,7 +1,7 @@
-export function updateProcedure(procedure, currentStep) {
+export function updateProcedure(procedures, currentStep) {
     var procedureDiv = document.getElementById('procedure_div');
     procedureDiv.innerHTML = '';
-    procedure.forEach(function(procedure, index) {
+    procedures.forEach(function(procedure, index) {
         var procedureElement = document.createElement('p');
         procedureElement.textContent = procedure;
         if (index === currentStep) {

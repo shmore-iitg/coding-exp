@@ -1,4 +1,4 @@
-export function updateHelp(help) {
+export function updateHelp(steps, currentStep) {
     var helpDiv = document.getElementById('help_div');
     helpDiv.textContent = 'Extra..';
     helpDiv.href = '#';

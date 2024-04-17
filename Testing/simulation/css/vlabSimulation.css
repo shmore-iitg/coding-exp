@@ -21,3 +21,17 @@
     flex-direction: column;
     justify-content: space-between;
 }
+
+.thumbnail_container {
+    display: none;
+}
+
+.thumbnail_container .thumbnail_button {
+    width: 50px;  /* Adjust as needed */
+    height: 50px; /* Adjust as needed */
+}
+
+#procedure_div {
+    display: block;
+}
+
