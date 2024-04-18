@@ -1,0 +1,67 @@
+#row1, #row2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px; /* space between items */
+}
+
+#row1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px; /* space between items */
+}
+
+#row1 > div {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* space between buttons */
+}
+
+#row2 {
+    flex-direction: column; /* items in a column */
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: white;
+    background-color: #4CAF50;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+#imageSprite {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 600px;
+    width: 600px;
+    overflow: auto;
+}
+
+#imageSprite img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+#lottieContainer {
+    width: 800px;
+    height: 800px;
+}
+
+#procedure_step {
+    font-weight: bold;
+    font-size: 20px; 
+}
+
+#stepSelect {
+    display: none;
+}
