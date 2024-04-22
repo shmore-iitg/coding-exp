@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.8/lottie.min.js"  crossorigin="anonymous"></script>
+        <style>
+            #lottieContainer {
+                width: 50%;
+                margin: 0 auto;
+            }
+            #controls {
+                position: absolute;
+                left: 5%;
+                top: 5%;                
+            }
+        </style>        
+        <link rel="stylesheet" type="text/css" href="./flow_cyto.css">        
+    </head>
+    <body> 
+        <div id="row1">
+            <div>
+                <button id="startAnimations">Start</button>                
+                <button id="prevAnimation" style="display: none;">Prev</button>
+                <button id="nextAnimation" style="display: none;">Next</button>
+            </div>
+            <div id="count"></div>
+            <div id="procedure_step"></div>
+        </div>
+        <div id="row2">
+            <div id="imageSprite"></div>
+            <div id="lottieContainer"></div>
+        </div>
+
+        <script src="./flow_cyto.js"></script>
+    </body>
+</html>
