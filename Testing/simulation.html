@@ -281,32 +281,38 @@
                         </div>
                     </header>
                     <div class="container">
-                        <div class="column left">
-                            <button id="start-prev-button">Start</button>
-                        </div>
-                        <div class="column center">
-                            <div id="animation_div"></div>
-                        </div>
-                        <div class="column right">
-                            <div id="title_div"></div>
-                            <div id="procedure_div"></div>                            
-                            <button id="next-end-button">Next</button>
-                            <div id="help_div">
-                                <a id="help_text" href="#">Extra...</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                        <div id="title_div"></div>
+                        <div class="performingRow">
+                            <div id="animation_div"></div>                        
+                            <div id="procedure_div"></div>
+                        </div>  <!-- ends performingRow -->
+                        <div class="controlPanel">
+                            <button id="start-prev-button">Start</button>                            
+                            <select id="stepSelect">
+                                <option value="" selected>Choose</option>
+                                <option value="0">Step 1</option>
+                                <option value="18">Step 2</option>
+                                <option value="29">Step 3</option>
+                                <option value="40">Step 4</option>
+                                <option value="48">Step 5</option>
+                                <option value="56">Step 6</option>
+                            </select>                            
+                            <button id="next-end-button">Next</button>                                            
+                        </div>  <!-- ends controlPanel -->
+                    </div>  <!-- ends container -->
+                </div>                
             </div>
         </div>
     </div>
 
     <script src="./assets/js/toggleSidebar.js"></script> 
-    <script type="module" src="./simulation/js/animation.js"></script>
+    
+    
     <script type="module" src="./simulation/js/title.js"></script>
-    <script type="module" src="./simulation/js/procedure.js"></script>
-    <script type="module" src="./simulation/js/vlabExtra.js"></script>    
+    <script type="module" src="./simulation/js/animation.js"></script>
+    <script type="module" src="./simulation/js/procedure.js"></script>    
     <script type="module" src="./simulation/js/vlabSimulation.js"></script>   
+    <!-- <script src="./simulation/js/vlabExtra.js"></script>   -->
 
 </body>
 </html>

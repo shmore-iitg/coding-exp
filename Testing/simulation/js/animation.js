@@ -1,42 +1,68 @@
 var currentAnimationIndex = 0;
 var animations = [];
+let containers = [];
 
 function loadNextAnimation(animationPaths) {
-    if (currentAnimationIndex >= animationPaths.length) {
-        console.log('All animations completed');
+    // Check that animationPaths is defined and is an array
+    if (!Array.isArray(animationPaths)) {
+        console.error(`Invalid animationPaths`);
         return;
     }
 
-    var animationDiv = document.getElementById('animation_div');
-    var animationPath = animationPaths[currentAnimationIndex];
+    if (currentAnimationIndex >= animationPaths.length) {
+        currentAnimationIndex = 0; // Reset the index if you want to loop the animations
+        return;
+    }
 
-    var animation = lottie.loadAnimation({
-        container: animationDiv,
+    let container = document.getElementById('animation_div');
+
+    // Clear the container before loading a new animation
+    while (container.firstChild) {
+        container.removeChild(container.firstChild);
+    }
+
+    var animationPath = animationPaths[currentAnimationIndex];
+    
+    // When you create a new animation, add its container to the containers array
+    let animation = bodymovin.loadAnimation({
+        container: container,
         renderer: 'svg',
         loop: false,
         autoplay: true,
         path: animationPath
     });
-
+    containers.push(container);
     animation.setSpeed(0.5);
-    console.log('current animation : ', animationPath);
+    
     animation.addEventListener('complete', () => {
-        animation.destroy();
-        currentAnimationIndex++;
+        animation.goToAndStop(animation.totalFrames, true);
         loadNextAnimation(animationPaths);
     });
 
-    animations.push(animation);
+    currentAnimationIndex++; // Increment the index to play the next animation
 }
 
-export function updateAnimation(animationPaths) {
-    // If there are current animations, destroy them
-    animations.forEach(animation => animation.destroy());
-    animations = [];
+export function updateAnimation(steps) {    
+    // If there are current animations, stop them and destroy them
+    animations.forEach((animation, index) => {
+        animation.stop();
+        animation.destroy();
 
-    // Reset the current animation index
+        // Clear the container for this animation
+        let container = containers[index];
+        while (container.firstChild) {
+            container.removeChild(container.firstChild);
+        }
+    });
+
+    // Reset the animations and containers arrays
+    animations = [];
+    containers = [];
+
+    // Reset the current animation index and step index
     currentAnimationIndex = 0;
 
-    // Start loading the animations
-    loadNextAnimation(animationPaths);
+    // Start loading the animations 
+    // console.log("In animation.js steps =  ",steps);    
+    loadNextAnimation(steps);
 }

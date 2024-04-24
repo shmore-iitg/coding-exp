@@ -1,37 +1,67 @@
-.container {
+.performingRow {
     display: flex;
     width: 100%;
+    margin-bottom: 20px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.15); /* Add shadow to the row */
 }
 
-.column {
-    padding: 10px;
-}
-
-.left {
-    width: 5%;
-}
-
-.center {
-    width: 70%;
-}
-
-.right {
-    width: 20%;
+#animation_div, #procedure_div {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    padding: 20px; /* Add padding */
+    border-radius: 10px; /* Round the corners */
+    background-color: #f5f5f5; /* Add a light background color */
+}
+
+#title_div {
+    font-weight: bold;
+    text-align: center;
+    font-size: 30px;
+    color: #2c99ce; /* Change the color to match the buttons */
+    margin-bottom: 20px; /* Add some space below the title */
+}
+
+#next-end-button, #start-prev-button, #stepSelect {
+    background-color: #2c99ce;
+    color: #fff;
+    width: auto;     
+    height: 50px;
+    border: none; /* Remove the default border */
+    border-radius: 5px; /* Round the corners */
+    font-size: 18px; /* Increase the font size */
+    cursor: pointer; /* Change the cursor when hovering over the buttons */
+}
+
+#stepSelect {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    appearance: none; /* Remove default styles */
+    -webkit-appearance: none; /* Remove default styles for Chrome and Safari */
+    -moz-appearance: none; /* Remove default styles for Firefox */
+    background-color: #f8f8f8;
+    color: #333;
+}
+
+#stepSelect:focus {
+    outline: none;
+    border-color: #2c99ce;
+}
+
+#next-end-button:hover, #start-prev-button:hover, #stepSelect:hover {
+    background-color: #2388a6; /* Darken the background color when hovering over the buttons */
+}
+
+.controlPanel {
+    display: flex;
+    align-items: center;
     justify-content: space-between;
+    gap: 30px; 
+    margin-top: 20px; 
+    padding: 20px; /* Add padding */
+    background-color: #f5f5f5; /* Add a light background color */
+    border-radius: 10px; /* Round the corners */
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.15); /* Add shadow to the panel */
 }
-
-.thumbnail_container {
-    display: none;
-}
-
-.thumbnail_container .thumbnail_button {
-    width: 50px;  /* Adjust as needed */
-    height: 50px; /* Adjust as needed */
-}
-
-#procedure_div {
-    display: block;
-}
-
