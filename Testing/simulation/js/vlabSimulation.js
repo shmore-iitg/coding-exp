@@ -405,11 +405,10 @@ selectElement.addEventListener('change', function() {
     var procedure = allProcedures[currentStep];
     var step = steps[currentStep];
 
-    // Update the animation, title, and procedure on the page
-    console.log('In select value change event', step);
+    // Update the animation, title, and procedure on the page    
     updateAnimation(step.playing_content);
     updateTitle(step.title);
-    showProcedure(step);    
+    showProcedure(step);   
 
     // Reset the select value to "Choose"
     this.value = "";
@@ -417,24 +416,21 @@ selectElement.addEventListener('change', function() {
 
 window.currentStep = window.currentStep || 0;
 
-//console.log('Initial currentStep:', currentStep);
-
 import { updateAnimation } from './animation.js';
 import { updateTitle } from './title.js';
 import { updateProcedure } from './procedure.js';
+import { tooltips } from './tooltip.js';
+import { showTooltip } from './tooltip.js';
 
 function updateContent() {
     var step = steps[currentStep];
     var nextButton = document.getElementById('next-end-button');
-    var startprevButton = document.getElementById('start-prev-button');
-    //var extraLink = document.getElementById('extra_link');    
+    var startprevButton = document.getElementById('start-prev-button');   
 
     // Always show the Next and Prev buttons
     nextButton.style.display = 'block';
-    startprevButton.style.display = 'block';
-    //extraLink.style.display = 'block';   
-
-    //console.log('Choosing the type', step.content_type);
+    startprevButton.style.display = 'block';    
+    
     if (step.content_type === 'animation') {
         // If the content_type is 'animation', call updateAnimation        
         updateAnimation(step.playing_content); 
@@ -463,6 +459,22 @@ function showProcedure(step) {
 window.onload = function() {
     document.getElementById('next-end-button').style.display = 'none';
     document.getElementById('stepSelect').style.display = 'none';
+        
+    for (var i = 0; i < tooltips.length; i++) {
+        (function() {
+            var iconId = tooltips[i].id;
+            var tooltipText = tooltips[i].text;
+    
+            var iconElement = document.getElementById(iconId);
+    
+            // Check if the element exists
+            if (iconElement) {
+                iconElement.addEventListener('click', function(event) {
+                    showTooltip(this.src, tooltipText, event, this);
+                });
+            }
+        })(); // Immediately invoke the function
+    }    
 };
 
 // Get the 'start-prev-button'
@@ -498,8 +510,13 @@ document.getElementById('next-end-button').addEventListener('click', function() 
     updateContent();
 });
 
-// Assuming the tooltip container is closed by clicking a button with the id 'close-tooltip'
-//document.getElementById('close_tooltip_container').addEventListener('click', function() {
-    // Ensure the 'Next' button is visible
-  //  document.getElementById('next-end-button').style.display = 'block';
-//});
+document.getElementById('extra-button').addEventListener('click', function() {
+    this.style.display = 'none';
+    document.getElementById('tooltip_container').style.display = 'block';
+});
+
+document.getElementById('close-tooltip-container').addEventListener('click', function() {
+    document.getElementById('tooltip_container').style.display = 'none';
+    document.getElementById('extra-button').style.display = 'block';
+});
+

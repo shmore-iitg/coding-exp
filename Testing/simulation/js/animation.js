@@ -23,7 +23,7 @@ function loadNextAnimation(animationPaths) {
 
     var animationPath = animationPaths[currentAnimationIndex];
     
-    // When you create a new animation, add its container to the containers array
+    // When you create a new animation, add its container to the containers array    
     let animation = bodymovin.loadAnimation({
         container: container,
         renderer: 'svg',
@@ -36,7 +36,9 @@ function loadNextAnimation(animationPaths) {
     
     animation.addEventListener('complete', () => {
         animation.goToAndStop(animation.totalFrames, true);
-        loadNextAnimation(animationPaths);
+        if (currentAnimationIndex < animationPaths.length) {
+            loadNextAnimation(animationPaths);
+        }
     });
 
     currentAnimationIndex++; // Increment the index to play the next animation
