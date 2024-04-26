@@ -1,23 +1,24 @@
 // Create an array of all procedures
     var allProcedures = [ 
-        '1. Dispose of the media in the petri dish',        
-        '2. Collect the PBS with the pipette',
-        '3. Add 400uL of PBS to the petri dish',
-        '4. Shake the petri dish for 5 seconds',
-        '5. Dispose of the PBS in the flask',
-        '6. Repeat the previous steps',
-        '7. Collect 400 uL of the PBS in the pipette and add into the petri dish',
-        '8. Scrape the petri dish',               
-        '9. Pipette 400 uL of PBS from the petri dish into the vial',
-        '10. Move the vial to the centrifuge',        
-        '11. Load the vial into the centrifuge',
-        '12. Unload the vial from the centrifuge',
-        '13. Move the vial to the ice',
-        '14. Dispose of the buffer in the flask',
-        '15. Mix the marker into the vial',
-        '16. Move the vial to the heatblock',
-        '17. Take out the marker from the heatblock',        
-        '18. Load the marker into the centrifuge',
+        '1. Prepare the apparatus',
+        '2. Dispose of the media in the petri dish',        
+        '3. Collect the PBS with the pipette',
+        '4. Add 400uL of PBS to the petri dish',
+        '5. Shake the petri dish for 5 seconds',
+        '6. Dispose of the PBS in the flask',
+        '7. Repeat the previous steps',
+        '8. Collect 400 uL of the PBS in the pipette and add into the petri dish',
+        '9. Scrape the petri dish',               
+        '10. Pipette 400 uL of PBS from the petri dish into the vial',
+        '11. Move the vial to the centrifuge',        
+        '12. Load the vial into the centrifuge',
+        '13. Unload the vial from the centrifuge',
+        '14. Move the vial to the ice',
+        '15. Dispose of the buffer in the flask',
+        '16. Mix the marker into the vial',
+        '17. Move the vial to the heatblock',
+        '18. Take out the marker from the heatblock',        
+        '19. Load the marker into the centrifuge',
         '1. Assemble the casting frame',
         '2. Lock the Gasket',
         '3. Mount the Gasket',
@@ -64,11 +65,11 @@
 
 // Create an array of steps
 var steps = [   
-    /*{
+    {
         title: 'Step 1 : Sample Preparation',
-        content_type: 'image',
-        playing_content: ['simulation/images/Part_1/1_Dish.png']
-    },*/
+        content_type: 'animation',
+        playing_content: ['simulation/json/Part_1_Steps/1_Flask.json']
+    },
     {
         title: 'Step 1 : Sample Preparation',        
         content_type: 'animation',
@@ -386,13 +387,7 @@ var steps = [
         title: 'Step 6 : Detection and Inference',        
         content_type: 'animation',
         playing_content: ['simulation/json/Part_6_Steps/4_Load_ChemiDoc.json']
-    }/*,
-    {
-        title: 'Dummy',
-        content_type: 'image',
-        playing_content: ['simulation/images/Part_1/1_Pipette_Flask_Dish.png']
-    }*/
-    // More steps...
+    }
 ];
 
 // Get the select element
@@ -425,11 +420,11 @@ import { showTooltip } from './tooltip.js';
 function updateContent() {
     var step = steps[currentStep];
     var nextButton = document.getElementById('next-end-button');
-    var startprevButton = document.getElementById('start-prev-button');   
+    var prevButton = document.getElementById('prev-button');   
 
     // Always show the Next and Prev buttons
     nextButton.style.display = 'block';
-    startprevButton.style.display = 'block';    
+    prevButton.style.display = 'block';    
     
     if (step.content_type === 'animation') {
         // If the content_type is 'animation', call updateAnimation        
@@ -446,6 +441,15 @@ function updateContent() {
     }    
     updateTitle(step.title);    
     showProcedure(step);    
+    // Enable the 'prev-button' if the current step is not the first step
+    if (currentStep > 0) {
+        console.log('currentStep', currentStep);
+        prevButton.disabled = false;
+        prevButton.style.backgroundColor = '';
+    } else {
+        prevButton.disabled = true;
+        prevButton.style.backgroundColor = 'transparent';
+    }    
 }
 
 function showProcedure(step) {
@@ -456,9 +460,11 @@ function showProcedure(step) {
     updateProcedure(procedures, currentStep - start);
 }
 
-window.onload = function() {
-    document.getElementById('next-end-button').style.display = 'none';
-    document.getElementById('stepSelect').style.display = 'none';
+window.onload = function() {    
+    document.getElementById('prev-button').disabled = true;
+    document.getElementById('prev-button').style.backgroundColor = 'transparent';
+    document.getElementById('next-end-button').style.display = 'inline';
+    document.getElementById('stepSelect').style.display = 'block';
         
     for (var i = 0; i < tooltips.length; i++) {
         (function() {
@@ -474,38 +480,37 @@ window.onload = function() {
                 });
             }
         })(); // Immediately invoke the function
-    }    
+    }  
+    updateContent();  
 };
 
-// Get the 'start-prev-button'
-var startPrevButton = document.getElementById('start-prev-button');
-
-// Set its initial text to 'Start'
-startPrevButton.textContent = 'Start';
-
-// Variable to track whether the 'start-prev-button' has been clicked for the first time
-var isFirstClick = true;
-
-// Add an event listener that changes its text to 'Prev' and updates the content when clicked
-startPrevButton.addEventListener('click', function() {  
-    document.getElementById('next-end-button').style.display = 'inline'; // or 'block'
-    document.getElementById('stepSelect').style.display = 'block'; // or 'inline'  
-    this.textContent = 'Prev';
-    
-    if (isFirstClick) {
-        isFirstClick = false;
-    } else {
-        // Decrement currentStep, but don't go below 0
-        currentStep = Math.max(currentStep - 1, 0);
-    }    
-    updateContent();
-});
 
 // Add event listener to next button
 document.getElementById('next-end-button').addEventListener('click', function() {
-     // Increment currentStep, but don't go past the last step
-     if (currentStep < steps.length - 1) {
+    // Enable the 'prev' button
+    var prevButton = document.getElementById('prev-button');
+    prevButton.disabled = false;
+
+    // Remove inline styles from 'prev-button'
+    prevButton.style.backgroundColor = '';
+
+    // Increment currentStep, but don't go past the last step
+    if (currentStep < steps.length - 1) {
         currentStep++;
+    }
+    updateContent();
+});
+
+// Add an event listener that changes its text to 'Prev' and updates the content when clicked
+document.getElementById('prev-button').addEventListener('click', function() {  
+    // Enable the 'prev-button' if the current step is not the first step
+    if (currentStep == 0) {
+        document.getElementById('prev-button').disabled = false;
+        document.getElementById('prev-button').style.backgroundColor = 'transparent';
+    }     
+    // Decrement currentStep, but don't go below 0
+    if (currentStep > 0) {
+        currentStep--;
     }
     updateContent();
 });
