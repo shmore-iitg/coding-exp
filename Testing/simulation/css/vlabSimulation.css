@@ -9,6 +9,10 @@
     box-shadow: 0px 0px 10px rgba(0,0,0,0.15); /* Add shadow to the row */
 }
 
+#procedure_div {
+    text-align: left;
+}
+
 #animation_div, #procedure_div {
     display: flex;
     flex-direction: column;

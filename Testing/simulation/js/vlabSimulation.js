@@ -399,7 +399,11 @@ selectElement.addEventListener('change', function() {
 
     var procedure = allProcedures[currentStep];
     var step = steps[currentStep];
-
+    var prevButton = document.getElementById('prev-button');
+    if (prevButton) {
+        prevButton.disabled = false;
+        prevButton.style.backgroundColor = '';
+    }
     // Update the animation, title, and procedure on the page    
     updateAnimation(step.playing_content);
     updateTitle(step.title);
@@ -517,11 +521,11 @@ document.getElementById('prev-button').addEventListener('click', function() {
 
 document.getElementById('extra-button').addEventListener('click', function() {
     this.style.display = 'none';
-    document.getElementById('tooltip_container').style.display = 'block';
+    document.getElementById('icon_container').style.display = 'block';
 });
 
-document.getElementById('close-tooltip-container').addEventListener('click', function() {
-    document.getElementById('tooltip_container').style.display = 'none';
+document.getElementById('close-icon-container').addEventListener('click', function() {
+    document.getElementById('icon_container').style.display = 'none';
     document.getElementById('extra-button').style.display = 'block';
 });
 

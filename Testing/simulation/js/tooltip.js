@@ -31,10 +31,26 @@ export var tooltips = [
 // Function to show a tooltip with the given image and text
 export function showTooltip(image, text, event) {
     // Get the animation_div
-    var animationDiv = document.querySelector('#animation_div');
+    var animationDiv = document.querySelector('#animation_div');    
 
-    // Save the old content
-    oldContent = animationDiv.innerHTML;
+    // Check if a tooltip is currently shown
+    var oldTooltip = document.getElementById('tooltip-container');
+    if (oldTooltip) {
+        // Remove the old tooltip from the DOM
+        animationDiv.removeChild(oldTooltip);
+    }    
+
+    if (animationDiv) {
+        var computedStyle = window.getComputedStyle(animationDiv);
+        animationDiv.style.maxWidth = computedStyle.width;
+        animationDiv.style.maxHeight = computedStyle.height;
+    }
+
+    // Check if a tooltip is not currently shown
+    if (!document.getElementById('tooltip-container')) {
+        // Save the old animation content
+        oldContent = animationDiv.innerHTML;
+    }
 
     // Check if the animation_div exists
     if (!animationDiv) {
@@ -42,27 +58,51 @@ export function showTooltip(image, text, event) {
         return;
     }
 
-    // Set the tooltip's content
-    animationDiv.innerHTML = `
-    <div id="tooltip-container" class="tooltip-content">
+    // Create a new div for the tooltip
+    var tooltipContainer = document.createElement('div');
+    tooltipContainer.id = 'tooltip-container';
+    tooltipContainer.className = 'tooltip-content';
+    tooltipContainer.style.position = 'absolute';
+    tooltipContainer.style.top = '20px';
+    tooltipContainer.style.left = '20px';
+    tooltipContainer.style.width = '500px';
+    tooltipContainer.style.height = '500px';
+    tooltipContainer.style.overflow = 'auto';
+
+    tooltipContainer.innerHTML = `
         <button id="close-tooltip" class="close-button">X</button>
         <div class="tooltip-row">
             <div class="tooltip-column"><img id="tooltip-image" src="${image}" alt="Icon"></div>
             <div class="tooltip-column"><span>${text}</span></div>
         </div>
-    </div>
-    `;
+        `;
+    tooltipContainer.style.paddingTop = '80px';
+    tooltipContainer.style.paddingRight = '80px';
 
-    // Position the tooltip at the position of the clicked button
-    var rect = animationDiv.getBoundingClientRect();
-    animationDiv.style.left = (event.clientX - rect.left) + 'px';
-    animationDiv.style.top = (event.clientY - rect.top) + 'px';
+    animationDiv.appendChild(tooltipContainer);
+
+    // Add an event listener to the 'close' button
+    var closeButton = document.getElementById('close-tooltip');
+    if (closeButton) {
+        closeButton.addEventListener('click', function() {
+            hideTooltip();
+        });
+    }
+
+    // Get the dimensions of #animation_div and the tooltip
+    var animationDivRect = animationDiv.getBoundingClientRect();
+    var tooltipContainerRect = tooltipContainer.getBoundingClientRect();
+
+    // Calculate the position for the tooltip to be centered in #animation_div
+    var left = (animationDivRect.width - tooltipContainerRect.width) / 2;
+    var top = (animationDivRect.height - tooltipContainerRect.height) / 2;
+
+    // Position the tooltip
+    tooltipContainer.style.left = left + 'px';
+    tooltipContainer.style.top = top + 'px';
 
     // Show the tooltip
     animationDiv.style.display = 'block';
-
-    // Add an event listener to the close button
-    document.querySelector('#close-tooltip').addEventListener('click', hideTooltip);
 }
 
 // Function to hide the tooltip
