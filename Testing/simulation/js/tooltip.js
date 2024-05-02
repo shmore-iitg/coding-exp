@@ -62,13 +62,7 @@ export function showTooltip(image, text, event) {
     var tooltipContainer = document.createElement('div');
     tooltipContainer.id = 'tooltip-container';
     tooltipContainer.className = 'tooltip-content';
-    tooltipContainer.style.position = 'absolute';
-    tooltipContainer.style.top = '20px';
-    tooltipContainer.style.left = '20px';
-    tooltipContainer.style.width = '500px';
-    tooltipContainer.style.height = '500px';
-    tooltipContainer.style.overflow = 'auto';
-
+ 
     tooltipContainer.innerHTML = `
         <button id="close-tooltip" class="close-button">X</button>
         <div class="tooltip-row">
@@ -76,8 +70,6 @@ export function showTooltip(image, text, event) {
             <div class="tooltip-column"><span>${text}</span></div>
         </div>
         `;
-    tooltipContainer.style.paddingTop = '80px';
-    tooltipContainer.style.paddingRight = '80px';
 
     animationDiv.appendChild(tooltipContainer);
 

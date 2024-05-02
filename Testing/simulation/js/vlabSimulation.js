@@ -131,7 +131,7 @@ var steps = [
         playing_content: [
             'simulation/json/Part_1_Steps/17_Vial_Appear.json',
             'simulation/json/Part_1_Steps/18_Vial_Fill.json',
-        ]
+        ]   
     },
     {
         title: 'Step 1 : Sample Preparation',

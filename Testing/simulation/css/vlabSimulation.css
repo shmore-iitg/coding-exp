@@ -3,23 +3,36 @@
 }
 
 .performingRow {
+    overflow: auto;
     display: flex;
+    flex-direction: row;
     width: 100%;
     margin-bottom: 20px;
     box-shadow: 0px 0px 10px rgba(0,0,0,0.15); /* Add shadow to the row */
-}
-
-#procedure_div {
-    text-align: left;
 }
 
 #animation_div, #procedure_div {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 20px; /* Add padding */
-    border-radius: 10px; /* Round the corners */
-    background-color: #f5f5f5; /* Add a light background color */
+    padding: 20px; 
+    border-radius: 10px; 
+    background-color: #f5f5f5; 
+    border: 1px solid black;
+}
+
+#animation_div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    height: 100%;
+    flex: 70;    
+}
+
+#procedure_div {
+    text-align: left;
+    flex: 30;
 }
 
 #title_div {
@@ -64,6 +77,7 @@
 
 .controlPanel {
     display: flex;
+    flex-direction: row;
     align-items: center;
     justify-content: space-between;
     gap: 30px; 
@@ -72,6 +86,32 @@
     background-color: #f5f5f5; /* Add a light background color */
     border-radius: 10px; /* Round the corners */
     box-shadow: 0px 0px 10px rgba(0,0,0,0.15); /* Add shadow to the panel */
+}
+
+.tooltip-row {
+    display: flex;
+    flex-direction: row;
+}
+
+#tooltip-container {
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    box-sizing: border-box;
+    margin: auto;   
+    padding: 20px;
+}
+
+#tooltip-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    height: auto;
+    display: block;
+    margin: auto; 
 }
 
 .tooltip-icon {
@@ -90,11 +130,15 @@
 
 .tooltip-row {
     display: flex;
-    gap: 20px;
+    gap: 10px;
+}
+
+.tooltip-column {
+    overflow: auto;
 }
 
 .tooltip-column:first-child {
-    flex: 0 0 100px;
+    flex: 1;
     border-radius: 6px; 
 }
 
@@ -106,8 +150,8 @@
 
 .close-button {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 10px;
+    right: 10px;
     padding: 5px;
     background-color: #f44336;
     color: #fff;
@@ -118,4 +162,34 @@
 
 .close-button:hover {
     background-color: #f44336;
+}
+
+@media screen and (max-width: 600px) {
+    #tooltip-container {
+        flex-direction: column;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .tooltip-row {
+        flex-direction: column;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .performingRow {
+        flex-direction: column;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .controlPanel {
+        flex-direction: column;
+    }
+}
+
+#icon_container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap; 
 }
