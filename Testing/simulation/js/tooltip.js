@@ -1,4 +1,26 @@
-var oldContent;
+document.addEventListener('DOMContentLoaded', (event) => {
+    // Get all the icons in the icon-container
+    var icons = document.querySelectorAll('#icon_container .tooltip-icon');
+
+    icons.forEach(function(icon) {
+        icon.isTooltipShown = false;
+    
+        icon.addEventListener('click', function(event) {
+            event.stopImmediatePropagation(); 
+    
+            var currentIcon = event.currentTarget;
+            
+            if (currentIcon.isTooltipShown) {            
+                hideTooltip();
+                currentIcon.isTooltipShown = false;
+            } else {
+                showTooltip(currentIcon.id, currentIcon.src, currentIcon.alt, event); 
+                currentIcon.isTooltipShown = true;
+            }
+        });
+    });
+});
+
 
 export var tooltips = [
     {
@@ -29,96 +51,48 @@ export var tooltips = [
 ];
 
 // Function to show a tooltip with the given image and text
-export function showTooltip(image, text, event) {
-    // Get the animation_div
-    var animationDiv = document.querySelector('#animation_div');    
+export function showTooltip(id, image, text, event) {
+    // Get the tooltip container and its elements
+    var tooltipContainer = document.getElementById('tooltip-container');
+    var tooltipImage = document.getElementById('tooltip-image');
+    var tooltipText = document.getElementById('tooltip-text');
 
-    // Check if a tooltip is currently shown
-    var oldTooltip = document.getElementById('tooltip-container');
-    if (oldTooltip) {
-        // Remove the old tooltip from the DOM
-        animationDiv.removeChild(oldTooltip);
-    }    
-
-    if (animationDiv) {
-        var computedStyle = window.getComputedStyle(animationDiv);
-        animationDiv.style.maxWidth = computedStyle.width;
-        animationDiv.style.maxHeight = computedStyle.height;
-    }
-
-    // Check if a tooltip is not currently shown
-    if (!document.getElementById('tooltip-container')) {
-        // Save the old animation content
-        oldContent = animationDiv.innerHTML;
-    }
-
-    // Check if the animation_div exists
-    if (!animationDiv) {
-        console.error('animation_div not found');
+    // Check if the tooltip container exists
+    if (!tooltipContainer) {
+        console.error('tooltip-container not found');
         return;
     }
 
-    // Create a new div for the tooltip
-    var tooltipContainer = document.createElement('div');
-    tooltipContainer.id = 'tooltip-container';
-    tooltipContainer.className = 'tooltip-content';
- 
-    tooltipContainer.innerHTML = `
-        <button id="close-tooltip" class="close-button">X</button>
-        <div class="tooltip-row">
-            <div class="tooltip-column"><img id="tooltip-image" src="${image}" alt="Icon"></div>
-            <div class="tooltip-column"><span>${text}</span></div>
-        </div>
-        `;
+    // Find the tooltip object for the clicked icon
+    var tooltip = tooltips.find(function(t) {
+        return t.id === id; 
+    });
 
-    animationDiv.appendChild(tooltipContainer);
-
-    // Add an event listener to the 'close' button
-    var closeButton = document.getElementById('close-tooltip');
-    if (closeButton) {
-        closeButton.addEventListener('click', function() {
-            hideTooltip();
-        });
+    // If a tooltip object was found, use its text
+    if (tooltip) {
+        text = tooltip.text;
     }
 
-    // Get the dimensions of #animation_div and the tooltip
-    var animationDivRect = animationDiv.getBoundingClientRect();
-    var tooltipContainerRect = tooltipContainer.getBoundingClientRect();
-
-    // Calculate the position for the tooltip to be centered in #animation_div
-    var left = (animationDivRect.width - tooltipContainerRect.width) / 2;
-    var top = (animationDivRect.height - tooltipContainerRect.height) / 2;
-
-    // Position the tooltip
-    tooltipContainer.style.left = left + 'px';
-    tooltipContainer.style.top = top + 'px';
+    // Update the tooltip's content
+    tooltipImage.src = image;
+    tooltipText.textContent = text;
 
     // Show the tooltip
-    animationDiv.style.display = 'block';
+    tooltipContainer.style.display = 'block';
 }
 
 // Function to hide the tooltip
 export function hideTooltip() {
-    // Get the animation_div
-    var animationDiv = document.querySelector('#animation_div');    
+    // Get the tooltip container
     var tooltipContainer = document.getElementById('tooltip-container');
 
-    // Check if the animation_div exists
-    if (!animationDiv) {
-        console.error('animation_div not found');
+    // Check if the tooltip container exists
+    if (!tooltipContainer) {
+        console.error('tooltip-container not found');
         return;
     }
 
-    // Remove the event listener from the close button
-    var closeButton = document.querySelector('#close-tooltip');
-    if (closeButton) {
-        closeButton.removeEventListener('click', hideTooltip);
-    }
-
-    // Clear the tooltip's content
-    if (tooltipContainer) {
-        tooltipContainer.parentNode.removeChild(tooltipContainer);
-        // Replace the content with the old content
-        animationDiv.innerHTML = oldContent;
-    }
+    // Hide the tooltip
+    tooltipContainer.style.display = 'none';
 }
+

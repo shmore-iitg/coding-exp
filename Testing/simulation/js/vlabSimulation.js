@@ -420,6 +420,7 @@ import { updateTitle } from './title.js';
 import { updateProcedure } from './procedure.js';
 import { tooltips } from './tooltip.js';
 import { showTooltip } from './tooltip.js';
+import { hideTooltip } from './tooltip.js';
 
 function updateContent() {
     var step = steps[currentStep];
@@ -528,4 +529,15 @@ document.getElementById('close-icon-container').addEventListener('click', functi
     document.getElementById('icon_container').style.display = 'none';
     document.getElementById('extra-button').style.display = 'block';
 });
+
+// Get the close button
+var closeButton = document.getElementById('close-tooltip');
+
+// Check if the close button exists
+if (!closeButton) {
+    console.error('close-tooltip not found');
+} else {
+    // Add an event listener to the close button
+    closeButton.addEventListener('click', hideTooltip);
+}
 
